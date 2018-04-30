@@ -87,7 +87,7 @@ function createPlayer(player, charNum) {
         attacks += `<button id='${player[charNum].pName}item${i}' type="button" class="btn attack-btn btn-block" onclick="attack(player,'${player[charNum].attackType[i]}', '${player[charNum].pRace}')">${player[charNum].attackType[i]}</button><p>Damage:<span id='${player[charNum].pName}attack${i}'>${player[charNum].attackDamage[attType]}</span></p>`
         //  ////debugger 
     }
-    var template = ` <div class="col-6 player">
+    var template = ` <div class="col-6-lg col-6-md col-12-xs player">
                      <img src=${player[charNum].pImage}>
                      <button onclick="restoreHealth(player, '${player[charNum].pRace}')">Restore Health</button>
                      <p id='${player[charNum].pName}'>${player[charNum].pName}</p>
