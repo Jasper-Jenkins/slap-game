@@ -1,0 +1,14 @@
+#player p, span{
+    font-size: 25px;
+    background-color:black;
+    color:white;
+    margin:0px;
+}
+#player button{
+    color:green;
+    background-color:black;
+    border:1px solid white;
+}
+#player {
+    height:15em;
+}
