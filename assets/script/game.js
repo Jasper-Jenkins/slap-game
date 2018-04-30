@@ -7,7 +7,7 @@ var playerBaseDamage = 0;
 
 var races = { "Dragon": 0, "LizardFolk": 1 }
 var weapons = { "dagger": 5, "sword": 1, "bow": 2 }
-var weaponSelect = {"dagger":0,"sword":2, "bow": 3 }
+var weaponSelect = { "dagger": 0, "sword": 2, "bow": 3 }
 var NewCharacter = function (pName, pRace, pClass, pHealth, pStatus) {
     this.name = pName
     this.race = pRace
@@ -19,7 +19,7 @@ var NewCharacter = function (pName, pRace, pClass, pHealth, pStatus) {
 
 var weaponModifier = false;
 var player = [{
-    pName: "Drakenshadow",
+    pName: "Blue Behemoth",
     pImage: "assets/img/lizFolk/blue-dragon.png",
     pRace: "Dragon",
     pClass: "Guardian",
@@ -30,7 +30,7 @@ var player = [{
     attackType: ["hands", "kick", "punch"],
     attackDamage: { "hands": 1, "kick": 10, "punch": 5 }
 }, {
-    pName: "Ssalasskuss",
+    pName: "Drizzard",
     pImage: "assets/img/lizFolk/LF-Druid-Main.png",
     pRace: "LizardFolk",
     pClass: "Druid",
@@ -39,11 +39,11 @@ var player = [{
     pItems: [],
     pPlayerBaseDamage: 13,
     attackType: ["hands", "lightning", "grasping-vines"],
-    attackDamage: { "hands": 5, "lightning": 10, "grasping-vines": 5 }
+    attackDamage: { "hands": 1, "lightning": 10, "grasping-vines": 5 }
 }];
 
 var enemy = [{
-    pName: "Drakenshadow",
+    pName: "Blue Behemoth",
     pImage: "assets/img/lizFolk/blue-dragon.png",
     pRace: "Dragon",
     pClass: "Guardian",
@@ -54,7 +54,7 @@ var enemy = [{
     attackType: ["hands", "kick", "punch"],
     attackDamage: { "hands": 1, "kick": 10, "punch": 5 }
 }, {
-    pName: "Ssalasskuss",
+    pName: "Drizzard",
     pImage: "assets/img/lizFolk/LF-Druid-Main.png",
     pRace: "LizardFolk",
     pClass: "Druid",
@@ -63,7 +63,7 @@ var enemy = [{
     pItems: [],
     pPlayerBaseDamage: 13,
     attackType: ["hands", "lightning", "grasping-vines"],
-    attackDamage: { "hands": 5, "lightning": 10, "grasping-vines": 5 }
+    attackDamage: { "hands": 1, "lightning": 10, "grasping-vines": 5 }
 }];
 
 
@@ -91,7 +91,7 @@ function createPlayer(player, charNum) {
                      <img src=${player[charNum].pImage}>
                      <button onclick="restoreHealth(player, '${player[charNum].pRace}')">Restore Health</button>
                      <p id='${player[charNum].pName}'>${player[charNum].pName}</p>
-                     <p id='${player[charNum].pRace}'>${player[charNum].pHealth[player[charNum].pRace]}</p>
+                     <p id='${player[charNum].pRace}'>${player[charNum].pHealth[enemy[charNum].pRace]}</p>
                      <p id='${player[charNum].pRace + player[charNum].pStatus}'>Alive</p>
                      
                      <div id="attack-buttons">`+ attacks + ` 
@@ -99,7 +99,7 @@ function createPlayer(player, charNum) {
                      <div class="items">
                      <!-- <span onclick="equipItem('shield')" id="shield">Shield</span> -->
                      
-                     <span onclick="equipItem(player,'Dragon','dagger', 5)" id="dagger">Dagger</span>
+                     <span onclick="equipItem(player,'${player[charNum].pRace}','dagger', '${player[charNum].attackDamage[attType]}')" id="dagger${player[charNum].pName}">Dagger</span>
                      <!-- <span onclick="equipItem('bracer')" id="bracer">Bracer</span>    -->
                     </div>
                      
@@ -136,7 +136,7 @@ function createEnemy(enemy, charNum) {
                      <div class="items">
                      <!-- <span onclick="equipItem('shield')" id="shield">Shield</span> -->
                      
-                     <span onclick="equipItem(enemy,'${enemy[charNum].pRace}','dagger', '${weapons["dagger"]}')" id="dagger">Dagger</span>
+                     <span onclick="equipItem(enemy,'${enemy[charNum].pRace}','dagger', '${weapons["dagger"]}')" id="dagger${enemy[charNum].pName}">Dagger</span>
                      <!-- <span onclick="equipItem('bracer')" id="bracer">Bracer</span>    -->
                     </div>
                      
@@ -144,7 +144,7 @@ function createEnemy(enemy, charNum) {
                      </div>
                      
                      `
-                     // <p id="enemy-health
+    // <p id="enemy-health
     // <button id="left-hand" class="attack-btn" onclick="attack('slap', enemy)">Slap</button><p>Damage:<span id="left-hand-damage">1</span></p>
     // <button class="attack-btn" onclick="attack('punch',enemy)">Punch</button><p>Damage:<span>5</span></p>
     // <button class="attack-btn" onclick="attack('kick',enemy)">Kick</button><p>Damage:<span>10</span></p>
@@ -152,23 +152,22 @@ function createEnemy(enemy, charNum) {
     debugger
     //debugger
 }
+function attack2(playerAttack, attackType, playerRace) { //object string
+    var update = races[playerRace] // use playerRace to select obj from [obj obj]      
 
+    playerAttack[update].pHealth[playerRace] = playerAttack[update].pHealth[playerRace] - playerAttack[update].attackDamage[attackType];
+    updateHealth(playerAttack[update], playerRace)
+    updateStatus(playerAttack[update], playerRace)
+}
 function attack(playerAttack, attackType, playerRace) { //playerAttack: object, attackType: string, playerRace:string
     //////debugger
     var update = races[playerRace]
     //var damageChoice = races[playerRace] //takes in a string: to select a number from races[]
     playerAttack[update].pHealth[playerRace] = playerAttack[update].pHealth[playerRace] - playerAttack[update].attackDamage[attackType];
-    // console.log(playerAttack[update].pHealth[playerRace])
 
-    // console.log(playerAttack[update].attackDamage[attackType])
-    // // - damageModifier;
-    // console.log(`${playerAttack[update].pStatus}`)
-    // console.log(playerAttack[update])
-    updateHealth(playerAttack[update], playerRace)//character[races[playerRace]]
-    // updateHealth()
-    //console.log(character[races[playerRace]])
+    updateHealth(playerAttack[update], playerRace)
     updateStatus(playerAttack[update], playerRace)
-    ////debugger
+
 }
 function restoreHealth(playerRestoreHealth, playerRace) {
     var update = races[playerRace]
@@ -214,7 +213,7 @@ function equipItem(playerEquipItem, playerRace, itemType, itemDamage) { //(objec
     var update = races[playerRace]
     var itemToEquip = weaponSelect[itemType]
     console.log(itemToEquip)
-debugger
+    debugger
     if (itemType === 'dagger') {
         playerEquipItem[update].pItems.push('dagger'); // add dagger to pItems[]
         console.log(playerEquipItem[update].attackDamage["hands"]);
@@ -222,9 +221,9 @@ debugger
         //playerEquipItem[update].attackDamage["hands"] = itemDamage
         playerEquipItem[update].attackDamage["hands"] = weapons["dagger"];
         console.log(playerEquipItem[update].attackDamage["hands"]);
-        
+
         console.log(playerEquipItem[update].attackType[itemToEquip]);
-        
+
         playerEquipItem[update].attackType[itemToEquip] = itemType;
         console.log(playerEquipItem[update].attackType[itemToEquip]);
         document.getElementById(`${playerEquipItem[update].pName}item0`).innerText = playerEquipItem[update].attackType[itemToEquip]
