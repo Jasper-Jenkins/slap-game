@@ -75,31 +75,31 @@ var enemy = [{
 
 
 //console.log(character1)
-function createPlayer(player, charNum) {
+function createPlayer(player, playerRace) {
 
     var attacks = "";
     var attType = ""
-    for (var i = 0; i < player[charNum].attackType.length; i++) {
+    for (var i = 0; i < player[playerRace].attackType.length; i++) {
         //debugger
         console.log(attType)
-        attType = player[charNum].attackType[i]
+        attType = player[playerRace].attackType[i]
         //console.log(attType)
-        attacks += `<button id='${player[charNum].pName}item${i}' type="button" class="btn attack-btn btn-block" onclick="attack(player,'${player[charNum].attackType[i]}', '${player[charNum].pRace}')">${player[charNum].attackType[i]}</button><p>Damage:<span id='${player[charNum].pName}attack${i}'>${player[charNum].attackDamage[attType]}</span></p>`
+        attacks += `<button id='${player[playerRace].pName}item${i}' type="button" class="attack btn attack-btn btn-block" onclick="attack(player,'${player[playerRace].attackType[i]}', '${player[playerRace].pRace}')">${player[playerRace].attackType[i]}</button><p>Damage:<span id='${player[playerRace].pName}attack${i}'>${player[playerRace].attackDamage[attType]}</span></p>`
         //  ////debugger 
     }
     var template = ` <div class="col-6-lg col-6-md col-12-xs player">
-                     <img src=${player[charNum].pImage}>
-                     <button onclick="restoreHealth(player, '${player[charNum].pRace}')">Restore Health</button>
-                     <p id='${player[charNum].pName}'>${player[charNum].pName}</p>
-                     <p id='${player[charNum].pRace}'>${player[charNum].pHealth[enemy[charNum].pRace]}</p>
-                     <p id='${player[charNum].pRace + player[charNum].pStatus}'>Alive</p>
+                     <img src=${player[playerRace].pImage}>
+                     <button onclick="restoreHealth(player, '${player[playerRace].pRace}')">Restore Health</button>
+                     <p id='${player[playerRace].pName}'>${player[playerRace].pName}</p>
+                     <p id='${player[playerRace].pRace}'>${player[playerRace].pHealth[enemy[playerRace].pRace]}</p>
+                     <p id='${player[playerRace].pRace + player[playerRace].pStatus}'>Alive</p>
                      
                      <div id="attack-buttons">`+ attacks + ` 
                      </div>
                      <div class="items">
                      <!-- <span onclick="equipItem('shield')" id="shield">Shield</span> -->
                      
-                     <span onclick="equipItem(player,'${player[charNum].pRace}','dagger', '${player[charNum].attackDamage[attType]}')" id="dagger${player[charNum].pName}">Dagger</span>
+                     <span onclick="equipItem(player,'${player[playerRace].pRace}','dagger', '${player[playerRace].attackDamage[attType]}')" id="dagger${player[playerRace].pName}">Dagger</span>
                      <!-- <span onclick="equipItem('bracer')" id="bracer">Bracer</span>    -->
                     </div>
                      
@@ -120,9 +120,9 @@ function createEnemy(enemy, charNum) {
         //debugger
         console.log(attType)
         attType = enemy[charNum].attackType[i]
-        //console.log(attType)
+        console.log(attType)
         attacks += `<button id='${enemy[charNum].pName}item${i}' type="button" class="btn attack-btn btn-block" onclick="attack(enemy,'${enemy[charNum].attackType[i]}', '${enemy[charNum].pRace}')">${enemy[charNum].attackType[i]}</button><p>Damage:<span id='${enemy[charNum].pName}attack${i}'>${enemy[charNum].attackDamage[attType]}</span></p>`
-        //  ////debugger 
+        debugger 
     }
     var template = ` <div class="col-6 enemy">
                      <img src=${enemy[charNum].pImage}>
@@ -213,9 +213,32 @@ function equipItem(playerEquipItem, playerRace, itemType, itemDamage) { //(objec
     var update = races[playerRace]
     var itemToEquip = weaponSelect[itemType]
     console.log(itemToEquip)
-    debugger
+    //debugger
     if (itemType === 'dagger') {
         playerEquipItem[update].pItems.push('dagger'); // add dagger to pItems[]
+        console.log(playerEquipItem[update].attackDamage["hands"]);
+        //playerEquipItem[update].attackType[itemToEquip] = itemType;
+        //playerEquipItem[update].attackDamage["hands"] = itemDamage
+        playerEquipItem[update].attackDamage["hands"] = weapons["dagger"];
+        console.log(playerEquipItem[update].attackDamage["hands"]);
+
+        console.log(playerEquipItem[update].attackType[itemToEquip]);
+
+        playerEquipItem[update].attackType[itemToEquip] = itemType;
+        console.log(playerEquipItem[update].attackType[itemToEquip]);
+        document.getElementById(`${playerEquipItem[update].pName}item0`).innerText = playerEquipItem[update].attackType[itemToEquip]
+        document.getElementById(`${playerEquipItem[update].pName}attack0`).innerText = playerEquipItem[update].attackDamage["hands"]
+        debugger
+        //items.itemType.itemName;
+        if (weaponModifier == false) {
+            //damageModifier += items.dagger.itemModifier;
+            // document.getElementById("left-hand").innerText = playerEquipItem[0].pItems[0];
+            // document.getElementById("left-hand-damage").innerText = (playerBaseDamage + items.dagger.itemModifier);
+            weaponModifier = true;
+        }
+    }
+    if (itemType === 'shield') {
+        playerEquipItem[update].pItems.push('shield'); // add dagger to pItems[]
         console.log(playerEquipItem[update].attackDamage["hands"]);
         //playerEquipItem[update].attackType[itemToEquip] = itemType;
         //playerEquipItem[update].attackDamage["hands"] = itemDamage
@@ -240,7 +263,7 @@ function equipItem(playerEquipItem, playerRace, itemType, itemDamage) { //(objec
 }
 
 createPlayer(player, races["LizardFolk"])
-createEnemy(enemy, races["Dragon"])
+createEnemy(enemy, races["LizardFolk"])
 //CreatePlayer(player, races["Dragon"])
 
 //slap()

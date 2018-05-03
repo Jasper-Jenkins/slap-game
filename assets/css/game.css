@@ -5,9 +5,11 @@
     margin:0px;
 }
 #player button{
-    color:green;
+    font-size: 25px;
+    color:white;
     background-color:black;
     border:1px solid white;
+   /* width:50%;*/
 }
 #player {
     height:15em;
