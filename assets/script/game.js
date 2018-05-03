@@ -6,8 +6,12 @@ var damageModifier = 0;
 var playerBaseDamage = 0;
 
 var races = { "Dragon": 0, "LizardFolk": 1 }
+
+//should these potentially be on the character object?
 var weapons = { "dagger": 5, "sword": 1, "bow": 2 }
 var weaponSelect = { "dagger": 0, "sword": 2, "bow": 3 }
+
+//constructor created but never used
 var NewCharacter = function (pName, pRace, pClass, pHealth, pStatus) {
     this.name = pName
     this.race = pRace
@@ -16,8 +20,10 @@ var NewCharacter = function (pName, pRace, pClass, pHealth, pStatus) {
     this.charStatus = pStatus
 }
 
-
+//this might also belong on the character object
 var weaponModifier = false;
+
+//build these with the constructor instead of object literals
 var player = [{
     pName: "Blue Behemoth",
     pImage: "assets/img/lizFolk/blue-dragon.png",
@@ -152,6 +158,8 @@ function createEnemy(enemy, charNum) {
     debugger
     //debugger
 }
+
+//how could you combine the attacks into one function? attack(type)
 function attack2(playerAttack, attackType, playerRace) { //object string
     var update = races[playerRace] // use playerRace to select obj from [obj obj]      
 
@@ -208,7 +216,7 @@ var items = {
 
 //equipItem(player, items)
 
-
+//when you are re-using variable paths, consider using a variable
 function equipItem(playerEquipItem, playerRace, itemType, itemDamage) { //(object, string, string, number )   
     var update = races[playerRace]
     var itemToEquip = weaponSelect[itemType]
